@@ -1,0 +1,68 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:EasyCaster_Telebrowser" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!-- MENU -->
+    <system:String x:Key="m_lang">Зміна мови</system:String>
+    <system:String x:Key="m_help">Довідка</system:String>
+    <system:String x:Key="m_feedback">Зворотній зв'язок</system:String>
+    <system:String x:Key="m_about">Про нас</system:String>
+    <system:String x:Key="m_size">Розмір вікна</system:String>
+
+    <!-- MAIN BLOCK + ADDITIONAL BLOCK -->
+    <system:String x:Key="sn_l">Назва потоку</system:String>
+    <system:String x:Key="f_l">Формат</system:String>
+    <system:String x:Key="as_l">Адреса потоку</system:String>
+    <system:String x:Key="ai_l">Адреса інтерфейсу</system:String>
+    <system:String x:Key="sd_l">Дані потоку</system:String>
+
+    <!-- ADDITIONAL BLOCK -->
+    <system:String x:Key="save_b">&#160;&#160;&#160;&#160;&#160;&#160;&#160;Зберегти</system:String>
+    <system:String x:Key="c_file">C:\ffmpeg\ffmpegg.exe</system:String>
+    <system:String x:Key="c_file_p">C:\ffmpeg\ffplayg.exe</system:String>
+    <system:String x:Key="c_folder">C:\Video\Archive</system:String>
+
+    <!-- WARNINGS AND ERRORS -->
+    <system:String x:Key="c_fi_and_fo">Виберіть ffmpeg, ffplay файли і папку для запису!</system:String>
+    <system:String x:Key="size_l">Розмір вікна плеєра буде змінений після перезапуску програми!</system:String>
+    <system:String x:Key="tb_value">Виберіть шлях до ffmpeg, ffplay і папку для запису!</system:String>
+    <system:String x:Key="mb_save">Для застосування нового конфіга перезапустіть програму!</system:String>
+
+    <!-- STATUSES -->
+    <system:String x:Key="start_l">ПРАЦЮЄ</system:String>
+    <system:String x:Key="restart_l">РЕСТАРТ</system:String>
+    <system:String x:Key="stop_l">ЗУПИНЕНО</system:String>
+
+    <!-- FEEDBACK -->
+    <system:String x:Key="feedback_c">Зворотній зв'язок</system:String>
+    <system:String x:Key="tel_l">Тел.: +380951157048</system:String>
+    <system:String x:Key="email_l">Пошта:</system:String>
+    <system:String x:Key="site_l">Сайт:</system:String>
+    <system:String x:Key="contact_l">Зв'язатися з нами</system:String>
+    <system:String x:Key="contactUs_l">Наші контакти:</system:String>
+
+    <!-- ABOUT -->
+    <system:String x:Key="about_c">About</system:String>
+    <system:String x:Key="des_l1">Це програмне забезпечення є плеєром для перегляду різних потоків і переглядом метаданих. Щоб використовувати Easycaster MpegTS Player, вам необхідно завантажити FFmpeg і FFplay для Windows. Ви можете використовувати FFmpeg і FFplay з веб-сайту</system:String>
+    <system:String x:Key="p_ver_l">Program version</system:String>
+
+    <!-- HELP -->
+    <system:String x:Key="h1">Опис основних елементів</system:String>
+    <system:String x:Key="h2">Версія FFmpeg</system:String>
+    <system:String x:Key="h3">FFmpeg.exe з підтримкою ZMQ</system:String>
+    <system:String x:Key="h4">Версія FFplay</system:String>
+    <system:String x:Key="h5">FFplay.exe з підтримкою ZMQ</system:String>
+    <system:String x:Key="h6">Папка для запису</system:String>
+    <system:String x:Key="h7">Папка для запису даних із кроком 1 годину</system:String>
+    <system:String x:Key="h8">Початковий порт</system:String>
+    <system:String x:Key="h9">Поле для настроюваного порту zmq</system:String>
+    <system:String x:Key="h10">Назва потоку</system:String>
+    <system:String x:Key="h11">Меню, що випадає для настроюваного потоку. До 20 потоків</system:String>
+    <system:String x:Key="h12">Формат</system:String>
+    <system:String x:Key="h13">Формат потоку</system:String>
+    <system:String x:Key="h14">Як це використовувати?</system:String>
+    <system:String x:Key="h15">Ви можете запустити плеєр без створення нових пресетів. Для цього достатньо ввести адресу для потокового відтворення і вибрати тип потоку в полях з лівого боку від кнопки запису</system:String>
+    <system:String x:Key="h16">Як створити пресет?</system:String>
+    <system:String x:Key="h17">Щоб створити новий пресет, відкрийте додатковий блок за допомогою кнопки в нижньому правому куті. Після цього ви побачите блок із налаштуваннями нового пресету. Потрібні потокові дані та натисніть кнопку "Зберегти". Після цього ваш пресет буде доступний у випадаючому списку під вікном програвача. Щоб розпочати пресет, виберіть потрібний зі спадного списку та натисніть "Запустити"</system:String>
+    <system:String x:Key="h18">Допомога</system:String>
+
+</ResourceDictionary>

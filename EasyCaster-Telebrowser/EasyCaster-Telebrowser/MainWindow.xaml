@@ -1,0 +1,29 @@
+﻿<Window x:Name="form" x:Class="EasyCaster_Telebrowser.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasyCaster_Telebrowser"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized" Loaded="form_Loaded">
+    <Grid>
+        <Menu x:Name="main_menu" Height="25" VerticalAlignment="Top" Margin="-4,0,0,0" Foreground="#FF1D4382" Background="#FFC9CFD6" Padding="22,3,0,0" Panel.ZIndex="10000000">
+            <MenuItem x:Name="m_about" Header="{DynamicResource m_about}" Cursor="Hand" Padding="0,0,6,0" Margin="21,0,0,0" Foreground="#FF464646"/>
+            <MenuItem x:Name="m_feedback" Header="{DynamicResource m_feedback}" Cursor="Hand" Foreground="#FF464646"/>
+            <MenuItem x:Name="m_help" Header="{DynamicResource m_help}" Cursor="Hand" Foreground="#FF464646"/>
+            <MenuItem x:Name="m_lang" Header="{DynamicResource m_lang}" Cursor="Hand" Foreground="#FF464646">
+                <MenuItem x:Name="m_l_rus" Cursor="Hand" Header="RUS" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_rus_Click"/>
+                <MenuItem x:Name="m_l_ukr" Cursor="Hand" Header="UKR" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_ukr_Click"/>
+                <MenuItem x:Name="m_l_eng" Cursor="Hand" Header="ENG" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            </MenuItem>
+            <Button x:Name="m_encoder" Content="Encoder" Padding="5,1"/>
+            <Button x:Name="m_alphapro" Content="Alpha pro" Padding="5,1"/>
+            <Button x:Name="m_tele" Content="TELE" Padding="5,1"/>
+        </Menu>
+        <ScrollViewer Margin="0,25,0,0">
+            <StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

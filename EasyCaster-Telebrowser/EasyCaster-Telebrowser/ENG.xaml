@@ -1,0 +1,67 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:EasyCaster_Telebrowser" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!-- MENU -->
+    <system:String x:Key="m_lang">Change language</system:String>
+    <system:String x:Key="m_help">Help</system:String>
+    <system:String x:Key="m_feedback">Feedback</system:String>
+    <system:String x:Key="m_about">About</system:String>
+    <system:String x:Key="m_size">Window size</system:String>
+
+    <!-- MAIN BLOCK + ADDITIONAL BLOCK -->
+    <system:String x:Key="sn_l">Stream name</system:String>
+    <system:String x:Key="f_l">Format</system:String>
+    <system:String x:Key="as_l">Stream address</system:String>
+    <system:String x:Key="ai_l">Interface address</system:String>
+    <system:String x:Key="sd_l">Stream data</system:String>
+
+    <!-- ADDITIONAL BLOCK -->
+    <system:String x:Key="save_b">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Save</system:String>
+    <system:String x:Key="c_file">C:\ffmpeg\ffmpegg.exe</system:String>
+    <system:String x:Key="c_file_p">C:\ffmpeg\ffplayg.exe</system:String>
+    <system:String x:Key="c_folder">C:\Video\Archive</system:String>
+
+    <!-- WARNINGS AND ERRORS -->
+    <system:String x:Key="c_fi_and_fo">Choose ffmpeg, ffplay files and a folder to record!</system:String>
+    <system:String x:Key="size_l">The player window size will be changed after restarting the program!</system:String>
+    <system:String x:Key="tb_value">Choose a path to ffmpeg, ffplay and a folder for recording!</system:String>
+    <system:String x:Key="mb_save">To use the new config, restart the program!</system:String>
+
+    <!-- STATUSES -->
+    <system:String x:Key="start_l">RUNNING</system:String>
+    <system:String x:Key="restart_l">RESTART</system:String>
+    <system:String x:Key="stop_l">STOPPED</system:String>
+
+    <!-- FEEDBACK -->
+    <system:String x:Key="feedback_c">Feedback</system:String>
+    <system:String x:Key="tel_l">Tel.: +380951157048</system:String>
+    <system:String x:Key="email_l">Email:</system:String>
+    <system:String x:Key="site_l">Site:</system:String>
+    <system:String x:Key="contact_l">Contact us</system:String>
+    <system:String x:Key="contactUs_l">Our contacts:</system:String>
+
+    <!-- ABOUT -->
+    <system:String x:Key="about_c">About</system:String>
+    <system:String x:Key="des_l1">This software is a player for viewing various streams and viewing metadata. To use Easycaster MpegTS Player, you need to download FFmpeg and FFplay for Windows. You can use FFmpeg and FFplay from the website</system:String>
+    <system:String x:Key="p_ver_l">Program version</system:String>
+
+    <!-- HELP -->
+    <system:String x:Key="h1">Description of the main elements</system:String>
+    <system:String x:Key="h2">FFmpeg version</system:String>
+    <system:String x:Key="h3">FFmpeg.exe with support ZMQ</system:String>
+    <system:String x:Key="h4">FFplay version</system:String>
+    <system:String x:Key="h5">FFplay.exe with support ZMQ</system:String>
+    <system:String x:Key="h6">Record folder</system:String>
+    <system:String x:Key="h7">Folder for write data of 1 hour step</system:String>
+    <system:String x:Key="h8">Initial port</system:String>
+    <system:String x:Key="h9">Field for custom zmq port</system:String>
+    <system:String x:Key="h10">Stream name</system:String>
+    <system:String x:Key="h11">Dropdown menu for custom stream. Up to 20 streams</system:String>
+    <system:String x:Key="h12">Format</system:String>
+    <system:String x:Key="h13">Format of stream</system:String>
+    <system:String x:Key="h14">How to use it?</system:String>
+    <system:String x:Key="h15">You can launch the player without  creating new presets. To do this, just enter a link to the stream and select the type of stream in the fields on the left side of the record button</system:String>
+    <system:String x:Key="h16">How create preset?</system:String>
+    <system:String x:Key="h17">To create a new preset, open an additional block using the button in the lower right corner. After that, you look at the block with the settings of the new preset. The required stream data and click the "Save" button. After that, your preset will be available in the drop-down list under the player window. To start a preset, select the one you need from the drop-down list and click "Launch".</system:String>
+    <system:String x:Key="h18">Help</system:String>
+</ResourceDictionary>
