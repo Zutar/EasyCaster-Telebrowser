@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Management;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -24,13 +25,14 @@ namespace EasyCaster_Telebrowser
         [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
         static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
 
-        Process encoder = new Process();
-        Process alphaPro = new Process();
-        Process tele = new Process();
-
         const int GWL_STYLE = (-16);
         const uint WS_SIZEBOX = 0x00040000;
         const int WS_CAPTION = 0x00C00000;
+
+        bool[] enable = { false, false, false };
+        Process[] proc = { new Process(), new Process(), new Process() };
+
+        DispatcherTimer check_timer = null;
 
         public MainWindow()
         {
@@ -56,10 +58,14 @@ namespace EasyCaster_Telebrowser
 
         private void form_Loaded(object sender, RoutedEventArgs e)
         {
+            check_timer = new DispatcherTimer();
+            check_timer.Tick += new EventHandler(CheckTimer_Tick);
+            check_timer.Interval = new TimeSpan(0, 0, 1);
+
             SetLanguageDictionary();
 
             /* Launch encoder */
-            StartProcess("encoder");
+            StartProcess(0);
             
             /* Launch alphaPro */
             DispatcherTimer alphaProTimer = new DispatcherTimer();
@@ -70,7 +76,8 @@ namespace EasyCaster_Telebrowser
             void StartAlphaPro_Tick(object s1, EventArgs e1)
             {
                 alphaProTimer.Stop();
-                intoMainWindow(encoder, "encoder");
+                StartProcess(1);
+                intoMainWindow(0, true);
             }
             /* Launch TELE */
             DispatcherTimer teleTimer = new DispatcherTimer();
@@ -81,26 +88,55 @@ namespace EasyCaster_Telebrowser
             void StartTele_Tick(object s1, EventArgs e1)
             {
                 teleTimer.Stop();
+                //StartProcess(2);
+                intoMainWindow(1, true);
+                //intoMainWindow(2);
+                check_timer.IsEnabled = true;
             }
         }
-        private void KillProcess(int id, String type)
+        private void CheckTimer_Tick(object s1, EventArgs e1)
+        {
+            for(int i = 0; i < proc.Length; i++)
+            {
+                if (!ProcessExists(i))
+                {
+                    if (i != 2)
+                    {
+                        //KillProcess(i);
+                        //StartProcess(i);
+                    }
+                }
+            }
+        }
+        private bool ProcessExists(int id)
+        {
+            return Process.GetProcesses().Any(x => x.Id == id);
+        }
+        private void KillProcess(int id)
         {
             BrushConverter bc = new BrushConverter();
-            if (type == "encoder")
+            if (id == 0)
             {
-                encoder = null;
                 m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
+            }else if (id == 1)
+            {
+                m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
+            }
+            else
+            {
+                m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
             }
             try
             {
-                KillProcessAndChildrens(id);
+                KillProcessAndChildrens(proc[id].Id);
             }
             catch (Exception)
             {
 
             }
+            proc[id] = null;
         }
-        private void StartProcess(string type)
+        private void StartProcess(int id)
         {
             String name = "";
             var startInfo = new ProcessStartInfo
@@ -110,45 +146,35 @@ namespace EasyCaster_Telebrowser
                 CreateNoWindow = true
             };
 
-            Process proc = null;
-
-            if (type == "encoder")
+            proc[id] = new Process();
+            if (id == 0)
             {
-                encoder = new Process();
                 startInfo.Arguments = "/C " + "\"C:\\Program Files (x86)\\Easycaster\\Easycaster TV Encoder\\Easycaster TV Encoder.exe\"";
-                encoder.StartInfo = startInfo;
-                encoder.Start();
                 name = "Easycaster TV Encoder";
-                proc = encoder;
 
                 BrushConverter bc = new BrushConverter();
                 m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#C2FF80");
             }
-            else if(type == "alphaPro")
+            else if(id == 1)
             {
-                alphaPro = new Process();
-                startInfo.Arguments = "/C " + "\"C:\\Program Files (x86)\\Easycaster\\Easycaster TV Encoder\\Easycaster TV Encoder.exe\"";
-                alphaPro.StartInfo = startInfo;
-                alphaPro.Start();
-                name = "Alpha Pro";
-                proc = alphaPro;
+                startInfo.Arguments = "/C " + "\"C:\\Program Files (x86)\\EasyCaster\\Easycaster MpegTS Player Install\\Easycaster MpegTS Player.exe\"";
+                name = "Easycaster MpegTS Player";
 
                 BrushConverter bc = new BrushConverter();
                 m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#C2FF80");
             }
             else
             {
-                tele = new Process();
-                startInfo.Arguments = "/C " + "\"C:\\Program Files (x86)\\Easycaster\\Easycaster TV Encoder\\Easycaster TV Encoder.exe\"";
-                tele.StartInfo = startInfo;
-                tele.Start();
-                name = "TELE";
-                proc = tele;
+                startInfo.Arguments = "/C " + "\"C:\\Program Files (x86)\\Easycaster\\Easycaster Restreamer DEMO\\Easycaster Restreamer DEMO.exe\"";
+                name = "Easycaster Restreamer DEMO";
 
                 BrushConverter bc = new BrushConverter();
                 m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#C2FF80");
             }
 
+            proc[id].StartInfo = startInfo;
+            proc[id].Start();
+            enable[id] = true;
 
             DispatcherTimer win_timer = new DispatcherTimer();
             win_timer.Tick += new EventHandler(StartTimer1_Tick);
@@ -159,7 +185,7 @@ namespace EasyCaster_Telebrowser
             void StartTimer1_Tick(object sender, EventArgs e)
             {
                 ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
-                ("Select * From Win32_Process Where ParentProcessID=" + proc.Id);
+                ("Select * From Win32_Process Where ParentProcessID=" + proc[id].Id);
                 ManagementObjectCollection processCollection = processSearcher.Get();
 
                 if (processCollection != null)
@@ -170,24 +196,10 @@ namespace EasyCaster_Telebrowser
                         try
                         {
                             p = Process.GetProcessById(Convert.ToInt32(mo["ProcessID"]));
-                            intoMainWindow(p, type);
+                            intoMainWindow(id, false);
                             if (p.MainWindowHandle.ToString() != "0" && p.ProcessName == name)
                             {
-                                encoder = p;
-
-                                if (type == "encoder")
-                                {
-                                    encoder = p;
-                                }
-                                else if (type == "alphaPro")
-                                {
-                                    alphaPro = p;
-                                }
-                                else
-                                {
-                                    tele = p;
-                                }
-
+                                proc[id] = p;
                                 win_timer.Stop();
                             }
                         }
@@ -197,18 +209,22 @@ namespace EasyCaster_Telebrowser
                 }
             }
         }
-
-        private void intoMainWindow(Process p, String type)
+        private void RestartProcess(int id)
+        {
+            KillProcess(id);
+            StartProcess(id);
+        }
+        private void intoMainWindow(int id, bool first)
         {
             int x = 0;
             int height = 0;
             int width = 0;
-            if (type == "encoder")
+            if (id == 0)
             {
                 x = Convert.ToInt32(this.Width) / 2 - 375;
                 height = Convert.ToInt32(this.Height);
             }
-            else if(type == "alphaPro")
+            else if(id == 1)
             {
                 width = Convert.ToInt32(this.Width);
                 height = Convert.ToInt32(this.Height);
@@ -219,10 +235,18 @@ namespace EasyCaster_Telebrowser
                 height = Convert.ToInt32(this.Height);
             }
 
-            int style = (int)GetWindowLong(p.MainWindowHandle, GWL_STYLE);
-            SetWindowLong(p.MainWindowHandle, GWL_STYLE, (uint)(style & ~(WS_CAPTION | WS_SIZEBOX)));
-            SetParent(p.MainWindowHandle, new WindowInteropHelper(Application.Current.MainWindow).Handle);
-            MoveWindow(p.MainWindowHandle, x, 25, width, height, true);
+            if(first && id != 0)
+            {
+                x = -5000;
+            }else if(first && id == 0)
+            {
+                x = Convert.ToInt32(this.Width) / 2 - 375;
+            }
+
+            int style = (int)GetWindowLong(proc[id].MainWindowHandle, GWL_STYLE);
+            SetWindowLong(proc[id].MainWindowHandle, GWL_STYLE, (uint)(style & ~(WS_CAPTION | WS_SIZEBOX)));
+            SetParent(proc[id].MainWindowHandle, new WindowInteropHelper(Application.Current.MainWindow).Handle);
+            MoveWindow(proc[id].MainWindowHandle, x, 25, width, height, true);
         }
 
         private void m_l_rus_Click(object sender, RoutedEventArgs e)
@@ -247,23 +271,23 @@ namespace EasyCaster_Telebrowser
         {
             try
             {
-                MoveWindow(alphaPro.MainWindowHandle, -5000, 20, 320, 180, true);
+                MoveWindow(proc[1].MainWindowHandle, -5000, 20, 320, 180, true);
             }
             catch (Exception) { }
 
             try
             {
-                MoveWindow(tele.MainWindowHandle, -5000, 20, 320, 180, true);
+                MoveWindow(proc[2].MainWindowHandle, -5000, 20, 320, 180, true);
             }
             catch (Exception) { }
 
-            if (encoder != null)
+            if (proc[0] != null && enable[0] == true)
             {
-                intoMainWindow(encoder, "encoder");
+                intoMainWindow(0, false);
             }
             else
             {
-                KillProcess(encoder.Id, "encoder");
+                //KillProcess(encoder.Id, "encoder");
             }
         }
 
@@ -271,23 +295,23 @@ namespace EasyCaster_Telebrowser
         {
             try
             {
-                MoveWindow(encoder.MainWindowHandle, -5000, 20, 320, 180, true);
+                MoveWindow(proc[0].MainWindowHandle, -5000, 20, 320, 180, true);
             }
             catch (Exception) { }
 
             try
             {
-                MoveWindow(tele.MainWindowHandle, -5000, 20, 320, 180, true);
+                MoveWindow(proc[2].MainWindowHandle, -5000, 20, 320, 180, true);
             }
             catch (Exception) { }
 
-            if (alphaPro != null)
+            if (proc[1] != null && enable[1] == true)
             {
-                intoMainWindow(alphaPro, "alphaPro");
+                intoMainWindow(1, false);
             }
             else
             {
-                KillProcess(alphaPro.Id, "alphaPro");
+                //KillProcess(alphaPro.Id, "alphaPro");
             }
         }
         private void KillProcessAndChildrens(int pid)
@@ -317,9 +341,9 @@ namespace EasyCaster_Telebrowser
         {
             try
             {
-                KillProcessAndChildrens(encoder.Id);
-                KillProcessAndChildrens(alphaPro.Id);
-                KillProcessAndChildrens(tele.Id);
+                KillProcessAndChildrens(proc[0].Id);
+                KillProcessAndChildrens(proc[1].Id);
+                KillProcessAndChildrens(proc[2].Id);
             }
             catch (Exception)
             {
@@ -331,23 +355,23 @@ namespace EasyCaster_Telebrowser
         {
             try
             {
-                MoveWindow(encoder.MainWindowHandle, -5000, 20, 320, 180, true);
+                MoveWindow(proc[0].MainWindowHandle, -5000, 20, 320, 180, true);
             }
             catch (Exception) { }
 
             try
             {
-                MoveWindow(alphaPro.MainWindowHandle, -5000, 20, 320, 180, true);
+                MoveWindow(proc[1].MainWindowHandle, -5000, 20, 320, 180, true);
             }
             catch (Exception) { }
 
-            if (alphaPro != null)
+            if (proc[2] != null && enable[2] == true)
             {
-                intoMainWindow(tele, "tele");
+                intoMainWindow(2, false);
             }
             else
             {
-                KillProcess(tele.Id, "tele");
+                //KillProcess(2);
             }
         }
     }
