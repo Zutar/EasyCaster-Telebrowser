@@ -3,10 +3,9 @@
                     xmlns:local="clr-namespace:EasyCaster_Telebrowser" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- MENU -->
     <system:String x:Key="m_lang">Зміна мови</system:String>
-    <system:String x:Key="m_help">Довідка</system:String>
     <system:String x:Key="m_feedback">Зворотній зв'язок</system:String>
     <system:String x:Key="m_about">Про нас</system:String>
-    <system:String x:Key="m_size">Розмір вікна</system:String>
+    <system:String x:Key="autostart">Автостарт</system:String>
 
     <!-- MAIN BLOCK + ADDITIONAL BLOCK -->
     <system:String x:Key="sn_l">Назва потоку</system:String>

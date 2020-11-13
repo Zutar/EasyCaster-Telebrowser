@@ -16,3 +16,7 @@ E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\
 E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\Debug\ENG.baml
 E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\Debug\RUS.baml
 E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\Debug\UKR.baml
+E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\Debug\Feedback.g.cs
+E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\Debug\Feedback.baml
+E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\Debug\About.g.cs
+E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\Debug\About.baml

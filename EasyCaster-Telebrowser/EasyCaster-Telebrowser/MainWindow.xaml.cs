@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Management;
@@ -29,10 +30,9 @@ namespace EasyCaster_Telebrowser
         const uint WS_SIZEBOX = 0x00040000;
         const int WS_CAPTION = 0x00C00000;
 
+        const string name = "EasyCaster-TV T2 Encoder";
         bool[] enable = { false, false, false };
         Process[] proc = { new Process(), new Process(), new Process() };
-
-        DispatcherTimer check_timer = null;
 
         public MainWindow()
         {
@@ -58,15 +58,22 @@ namespace EasyCaster_Telebrowser
 
         private void form_Loaded(object sender, RoutedEventArgs e)
         {
-            check_timer = new DispatcherTimer();
-            check_timer.Tick += new EventHandler(CheckTimer_Tick);
-            check_timer.Interval = new TimeSpan(0, 0, 1);
-
             SetLanguageDictionary();
-
+            BrushConverter bc = new BrushConverter();
             /* Launch encoder */
-            StartProcess(0);
-            
+            Process[] p = Process.GetProcessesByName("Easycaster TV Encoder");
+            if (p.Length == 0)
+            {
+                StartProcess(0, true);
+            }
+            else
+            {
+                proc[0] = p[0];
+                enable[0] = true;
+                m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#a9ff4d");
+                intoMainWindow(0, true);
+            }
+
             /* Launch alphaPro */
             DispatcherTimer alphaProTimer = new DispatcherTimer();
             alphaProTimer.Tick += new EventHandler(StartAlphaPro_Tick);
@@ -76,8 +83,18 @@ namespace EasyCaster_Telebrowser
             void StartAlphaPro_Tick(object s1, EventArgs e1)
             {
                 alphaProTimer.Stop();
-                StartProcess(1);
-                intoMainWindow(0, true);
+                p = Process.GetProcessesByName("alphapro");
+                if (p.Length == 0)
+                {
+                    StartProcess(1, true);
+                }
+                else
+                {
+                    proc[1] = p[0];
+                    enable[1] = true;
+                    m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
+                    intoMainWindow(1, true);
+                }
             }
             /* Launch TELE */
             DispatcherTimer teleTimer = new DispatcherTimer();
@@ -88,30 +105,26 @@ namespace EasyCaster_Telebrowser
             void StartTele_Tick(object s1, EventArgs e1)
             {
                 teleTimer.Stop();
-                //StartProcess(2);
-                intoMainWindow(1, true);
-                //intoMainWindow(2);
-                check_timer.IsEnabled = true;
-            }
-        }
-        private void CheckTimer_Tick(object s1, EventArgs e1)
-        {
-            for(int i = 0; i < proc.Length; i++)
-            {
-                if (!ProcessExists(i))
+                p = Process.GetProcessesByName("tele2");
+                if (p.Length == 0)
                 {
-                    if (i != 2)
-                    {
-                        //KillProcess(i);
-                        //StartProcess(i);
-                    }
+                    StartProcess(2, true);
+                }
+                else
+                {
+                    proc[2] = p[0];
+                    enable[2] = true;
+                    m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
+                    intoMainWindow(2, true);
                 }
             }
         }
+        
         private bool ProcessExists(int id)
         {
             return Process.GetProcesses().Any(x => x.Id == id);
         }
+        
         private void KillProcess(int id)
         {
             BrushConverter bc = new BrushConverter();
@@ -135,8 +148,9 @@ namespace EasyCaster_Telebrowser
 
             }
             proc[id] = null;
+            enable[id] = false;
         }
-        private void StartProcess(int id)
+        private void StartProcess(int id, bool firstStart)
         {
             String name = "";
             var startInfo = new ProcessStartInfo
@@ -153,36 +167,45 @@ namespace EasyCaster_Telebrowser
                 name = "Easycaster TV Encoder";
 
                 BrushConverter bc = new BrushConverter();
-                m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#C2FF80");
+                m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
+                if(firstStart) m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#a9ff4d");
             }
             else if(id == 1)
             {
-                startInfo.Arguments = "/C " + "\"C:\\Program Files (x86)\\EasyCaster\\Easycaster MpegTS Player Install\\Easycaster MpegTS Player.exe\"";
-                name = "Easycaster MpegTS Player";
+                startInfo.Arguments = "/C " + "\"C:\\alphapro64\\alphapro.exe\"";
+                name = "alphapro";
 
                 BrushConverter bc = new BrushConverter();
-                m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#C2FF80");
+                m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
             }
             else
             {
-                startInfo.Arguments = "/C " + "\"C:\\Program Files (x86)\\Easycaster\\Easycaster Restreamer DEMO\\Easycaster Restreamer DEMO.exe\"";
-                name = "Easycaster Restreamer DEMO";
+                startInfo.Arguments = "/C " + "\"C:\\alphapro64\\Tele2.exe\"";
+                name = "Tele2";
 
                 BrushConverter bc = new BrushConverter();
-                m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#C2FF80");
+                m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
             }
 
             proc[id].StartInfo = startInfo;
             proc[id].Start();
             enable[id] = true;
-
+            int timer = 1000;
+            if (id == 1)
+            {
+                timer = 2500;
+            }
+            else if (id == 2)
+            {
+                timer = 10000;
+            }
             DispatcherTimer win_timer = new DispatcherTimer();
-            win_timer.Tick += new EventHandler(StartTimer1_Tick);
-            win_timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            win_timer.Tick += new EventHandler(StartTimer_Tick);
+            win_timer.Interval = new TimeSpan(0, 0, 0, 0, timer);
             win_timer.IsEnabled = true;
 
 
-            void StartTimer1_Tick(object sender, EventArgs e)
+            void StartTimer_Tick(object sender, EventArgs e)
             {
                 ManagementObjectSearcher processSearcher = new ManagementObjectSearcher
                 ("Select * From Win32_Process Where ParentProcessID=" + proc[id].Id);
@@ -200,19 +223,16 @@ namespace EasyCaster_Telebrowser
                             if (p.MainWindowHandle.ToString() != "0" && p.ProcessName == name)
                             {
                                 proc[id] = p;
+                                intoMainWindow(id, firstStart);
                                 win_timer.Stop();
                             }
                         }
-                        catch (Exception) { }
+                        catch (Exception ee) {
+                        }
                     }
 
                 }
             }
-        }
-        private void RestartProcess(int id)
-        {
-            KillProcess(id);
-            StartProcess(id);
         }
         private void intoMainWindow(int id, bool first)
         {
@@ -287,8 +307,13 @@ namespace EasyCaster_Telebrowser
             }
             else
             {
-                //KillProcess(encoder.Id, "encoder");
+                StartProcess(0, false);
             }
+
+            BrushConverter bc = new BrushConverter();
+            m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#a9ff4d");
+            m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
+            m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
         }
 
         private void m_alphapro_Click(object sender, RoutedEventArgs e)
@@ -305,14 +330,39 @@ namespace EasyCaster_Telebrowser
             }
             catch (Exception) { }
 
+
             if (proc[1] != null && enable[1] == true)
             {
                 intoMainWindow(1, false);
             }
             else
             {
-                //KillProcess(alphaPro.Id, "alphaPro");
+                StartProcess(1, false);
             }
+
+
+            /*
+            Process[] p = Process.GetProcessesByName("alphapro");
+            if (p.Length == 0)
+            {
+                KillProcess(1);
+                StartProcess(1, false);
+            }
+            else
+            {
+                proc[1] = p[0];
+                enable[1] = true;
+                //m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
+                intoMainWindow(1, false);
+            }
+
+            
+             */
+
+            BrushConverter bc = new BrushConverter();
+            m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
+            m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#a9ff4d");
+            m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
         }
         private void KillProcessAndChildrens(int pid)
         {
@@ -371,8 +421,65 @@ namespace EasyCaster_Telebrowser
             }
             else
             {
-                //KillProcess(2);
+                StartProcess(2, false);
             }
+
+            BrushConverter bc = new BrushConverter();
+            m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
+            m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#e0ffbf");
+            m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#a9ff4d");
+        }
+
+        private void autostart_Checked(object sender, RoutedEventArgs e)
+        {
+            if ((bool)autostart.IsChecked)
+            {
+                SetAutorunValue(true);
+            }
+            else
+            {
+                SetAutorunValue(false);
+            }
+        }
+        public void SetAutorunValue(bool autorun)
+        {
+            RegistryKey registryKey = Registry.CurrentUser.OpenSubKey
+                    ("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+            if (autorun)
+            {
+                registryKey.SetValue(name, System.Reflection.Assembly.GetExecutingAssembly().Location);
+            }
+            else
+            {
+                registryKey.DeleteValue(name);
+            }
+        }
+
+        private void mc_encoder_Click(object sender, RoutedEventArgs e)
+        {
+            KillProcess(0);
+        }
+
+        private void mc_alphapro_Click(object sender, RoutedEventArgs e)
+        {
+            KillProcess(1);
+        }
+
+        private void mc_tele_Click(object sender, RoutedEventArgs e)
+        {
+            KillProcess(2);
+        }
+
+        private void m_feedback_Click(object sender, RoutedEventArgs e)
+        {
+            Feedback feedback = new Feedback();
+            feedback.ShowDialog();
+        }
+
+        private void m_about_Click(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.Show();
         }
     }
 }

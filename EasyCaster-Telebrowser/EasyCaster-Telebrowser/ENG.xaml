@@ -3,10 +3,9 @@
                     xmlns:local="clr-namespace:EasyCaster_Telebrowser" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- MENU -->
     <system:String x:Key="m_lang">Change language</system:String>
-    <system:String x:Key="m_help">Help</system:String>
     <system:String x:Key="m_feedback">Feedback</system:String>
     <system:String x:Key="m_about">About</system:String>
-    <system:String x:Key="m_size">Window size</system:String>
+    <system:String x:Key="autostart">Autostart</system:String>
 
     <!-- MAIN BLOCK + ADDITIONAL BLOCK -->
     <system:String x:Key="sn_l">Stream name</system:String>

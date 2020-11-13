@@ -1,0 +1,25 @@
+﻿<Window x:Class="EasyCaster_Telebrowser.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EasyCaster_Telebrowser"
+        mc:Ignorable="d"
+        Title="{DynamicResource about_c}" Height="550" Width="500" Loaded="Window_Loaded" ResizeMode="NoResize" Icon="Resources/icon.ico">
+    <Grid>
+        <Image HorizontalAlignment="Left" Height="281" VerticalAlignment="Top" Width="494" Source="Resources/Easycaster_logo.png"/>
+        <Label Content="Easycaster MpegTS Player" HorizontalAlignment="Left" Margin="0,291,0,0" VerticalAlignment="Top" FontWeight="Bold" Height="34" Width="492" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="24,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="445" Height="110" FontSize="16" Text="{DynamicResource des_l1}"/>
+        <TextBlock x:Name="about_link" HorizontalAlignment="Left" Margin="400,411,0,0" VerticalAlignment="Top" Width="74" FontWeight="Bold" FontSize="16" Background="White" Foreground="#FF8080FF" Cursor="Hand" Height="23">
+            <Hyperlink NavigateUri="https://www.gyan.dev/ffmpeg/builds/" RequestNavigate="Hyperlink_RequestNavigate">
+                gyan.dev
+            </Hyperlink>
+        </TextBlock>
+        <Label x:Name="v_lb" Content="{DynamicResource p_ver_l}" HorizontalAlignment="Left" Margin="0,484,0,0" VerticalAlignment="Top" Width="491" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="28" FontSize="14"/>
+        <TextBlock HorizontalAlignment="Left" Margin="123,460,0,0" VerticalAlignment="Top" Width="258" FontWeight="Bold" FontSize="18" Background="White" Foreground="#FF8080FF" Cursor="Hand">
+            <Hyperlink NavigateUri="http://live-tv.net.ua/soft/easycaster" RequestNavigate="Hyperlink_RequestNavigate">
+                live-tv.net.ua/soft/easycaster
+            </Hyperlink>
+        </TextBlock>
+    </Grid>
+</Window>
