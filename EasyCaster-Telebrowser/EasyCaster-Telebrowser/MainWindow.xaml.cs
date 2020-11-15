@@ -462,7 +462,14 @@ namespace EasyCaster_Telebrowser
 
         private void mc_alphapro_Click(object sender, RoutedEventArgs e)
         {
-            KillProcess(1);
+            if(enable[2] == true)
+            {
+                MessageBox.Show(FindResource("mb_dis").ToString());
+            }
+            else
+            {
+                KillProcess(1);
+            }
         }
 
         private void mc_tele_Click(object sender, RoutedEventArgs e)

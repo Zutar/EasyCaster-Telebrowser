@@ -25,7 +25,8 @@
     <system:String x:Key="size_l">Розмір вікна плеєра буде змінений після перезапуску програми!</system:String>
     <system:String x:Key="tb_value">Виберіть шлях до ffmpeg, ffplay і папку для запису!</system:String>
     <system:String x:Key="mb_save">Для застосування нового конфіга перезапустіть програму!</system:String>
-
+    <system:String x:Key="mb_dis">Спочатку потрібно вимкнути video switcher!</system:String>
+    
     <!-- STATUSES -->
     <system:String x:Key="start_l">ПРАЦЮЄ</system:String>
     <system:String x:Key="restart_l">РЕСТАРТ</system:String>

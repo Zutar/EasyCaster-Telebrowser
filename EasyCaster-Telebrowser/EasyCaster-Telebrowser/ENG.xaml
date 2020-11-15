@@ -25,6 +25,7 @@
     <system:String x:Key="size_l">The player window size will be changed after restarting the program!</system:String>
     <system:String x:Key="tb_value">Choose a path to ffmpeg, ffplay and a folder for recording!</system:String>
     <system:String x:Key="mb_save">To use the new config, restart the program!</system:String>
+    <system:String x:Key="mb_dis">First you need to disable video switcher!</system:String>
 
     <!-- STATUSES -->
     <system:String x:Key="start_l">RUNNING</system:String>
