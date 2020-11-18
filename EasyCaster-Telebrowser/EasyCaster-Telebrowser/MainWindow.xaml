@@ -5,23 +5,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyCaster_Telebrowser"
         mc:Ignorable="d"
-        Title="EasyCaster-TV T2 Encoder" WindowState="Maximized" Loaded="form_Loaded" Closing="form_Closing" ResizeMode="CanMinimize" Icon="Resources/icon.ico">
+        Title="EasyCaster-TV T2 Encoder" WindowState="Maximized" Loaded="form_Loaded" Closing="form_Closing" ResizeMode="CanResizeWithGrip" Icon="Resources/icon.ico">
+
+    <Window.Resources>
+        <Style TargetType="MenuItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type MenuItem}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Header}" Margin="5" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter Property="Background"  Value="Transparent"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <Menu x:Name="main_menu" Height="25" VerticalAlignment="Top" Margin="-4,0,0,0" Foreground="#FF1D4382" Background="#FFC9CFD6" Padding="22,3,0,0" Panel.ZIndex="10000000">
-            <MenuItem x:Name="m_about" Header="{DynamicResource m_about}" Cursor="Hand" Padding="0,0,6,0" Margin="21,0,0,0" Foreground="#FF464646" Click="m_about_Click"/>
-            <MenuItem x:Name="m_feedback" Header="{DynamicResource m_feedback}" Cursor="Hand" Foreground="#FF464646" Click="m_feedback_Click"/>
-            <MenuItem x:Name="m_lang" Header="{DynamicResource m_lang}" Cursor="Hand" Foreground="#FF464646">
-                <MenuItem x:Name="m_l_rus" Cursor="Hand" Header="RUS" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_rus_Click"/>
-                <MenuItem x:Name="m_l_ukr" Cursor="Hand" Header="UKR" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_ukr_Click"/>
-                <MenuItem x:Name="m_l_eng" Cursor="Hand" Header="ENG" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_eng_Click_1"/>
+        <Menu x:Name="main_menu" Height="40" VerticalAlignment="Top" Margin="-4,0,0,0" Foreground="#FF1D4382" Padding="22,3,0,0" Panel.ZIndex="10000000" FontFamily="Arial">
+            <Menu.Background>
+                <ImageBrush/>
+            </Menu.Background>
+            <MenuItem x:Name="m_about" Style="{DynamicResource MenuItem}" Header="{DynamicResource m_about}" Cursor="Hand" Padding="0,0,6,0" Margin="21,0,0,0" Foreground="#FF464646" Click="m_about_Click" FontFamily="Arial"/>
+            <MenuItem x:Name="m_feedback" Style="{DynamicResource MenuItem}" Header="{DynamicResource m_feedback}" Cursor="Hand" Foreground="#FF464646" Click="m_feedback_Click" FontFamily="Arial"/>
+            <MenuItem x:Name="m_lang" Style="{DynamicResource MenuItem}" Header="{DynamicResource m_lang}" Cursor="Hand" Foreground="#FF464646" FontFamily="Arial">
+                <MenuItem x:Name="m_l_rus" Style="{DynamicResource MenuItem}" Cursor="Hand" Header="RUS" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_rus_Click"/>
+                <MenuItem x:Name="m_l_ukr" Style="{DynamicResource MenuItem}" Cursor="Hand" Header="UKR" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_ukr_Click"/>
+                <MenuItem x:Name="m_l_eng" Style="{DynamicResource MenuItem}" Cursor="Hand" Header="ENG" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_eng_Click_1"/>
             </MenuItem>
-            <Button x:Name="m_encoder" Content="Encoder" Padding="5,1" Click="m_encoder_Click" Margin="0,-2,0,0"/>
-            <Button x:Name="mc_encoder" Content="x" Padding="5,1" Margin="0,-2,0,0" Click="mc_encoder_Click"/>
-            <Button x:Name="m_alphapro" Content="Video settings" Padding="5,1" Click="m_alphapro_Click" Margin="0,-2,0,0"/>
-            <Button x:Name="mc_alphapro" Content="x" Padding="5,1" Margin="0,-2,0,0" Click="mc_alphapro_Click"/>
-            <Button x:Name="m_tele" Content="Video switcher" Padding="5,1" Margin="0,-2,0,0" Click="m_tele_Click"/>
-            <Button x:Name="mc_tele" Content="x" Padding="5,1" Margin="0,-2,0,0" Click="mc_tele_Click"/>
-            <CheckBox x:Name="autostart" Content="{DynamicResource autostart}" Checked="autostart_Checked"/>
+            <Button x:Name="m_encoder" Style="{DynamicResource MenuItem}" Focusable="False" Content="Encoder" Padding="5,1" Click="m_encoder_Click" Margin="0,-2,0,0" Width="100" FontFamily="Arial" FontWeight="Bold" Background="#FFDDDDDD" Cursor="Hand"/>
+            <Button x:Name="mc_encoder" Content="x" Padding="5,1" Margin="-14,-2,0,0" Click="mc_encoder_Click" Width="20" FontWeight="Bold" Cursor="Hand"/>
+            <Button x:Name="m_alphapro" Content="Video settings" Padding="5,1" Click="m_alphapro_Click" Margin="0,-2,0,0" Width="100" FontFamily="Arial" FontWeight="Bold" Cursor="Hand"/>
+            <Button x:Name="mc_alphapro" Content="x" Padding="5,1" Margin="-14,-2,0,0" Click="mc_alphapro_Click" Width="20" FontFamily="Arial" FontWeight="Bold" Cursor="Hand"/>
+            <Button x:Name="m_tele" Content="Video switcher" Padding="5,1" Margin="0,-2,0,0" Click="m_tele_Click" FontFamily="Arial" FontWeight="Bold" Width="100" Cursor="Hand"/>
+            <Button x:Name="mc_tele" Content="x" Padding="5,1" Margin="-14,-2,0,0" Click="mc_tele_Click" Width="20" FontFamily="Arial" FontWeight="Bold" Cursor="Hand"/>
+            <CheckBox x:Name="autostart" Content="{DynamicResource autostart}" Checked="autostart_Checked" FontFamily="Arial" Margin="0,-2,0,0" Cursor="Hand" Padding="0,2,0,0"/>
         </Menu>
         <ScrollViewer Margin="0,25,0,0">
             <StackPanel x:Name="sp"/>

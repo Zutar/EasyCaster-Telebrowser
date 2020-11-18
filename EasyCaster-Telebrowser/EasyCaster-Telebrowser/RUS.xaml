@@ -5,7 +5,7 @@
     <system:String x:Key="m_lang">Изменение языка</system:String>
     <system:String x:Key="m_feedback">Обратная связь</system:String>
     <system:String x:Key="m_about">Про нас</system:String>
-    <system:String x:Key="autostart">Автостарт</system:String>
+    <system:String x:Key="autostart">⠀Автостарт</system:String>
 
     <!-- MAIN BLOCK + ADDITIONAL BLOCK-->
     <system:String x:Key="sn_l">Название потока</system:String>

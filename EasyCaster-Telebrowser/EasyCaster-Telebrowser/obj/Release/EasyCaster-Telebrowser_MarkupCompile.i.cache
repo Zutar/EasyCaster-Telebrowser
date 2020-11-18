@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\Debug\
+E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\obj\Release\
 EasyCaster_Telebrowser
 none
 false
-DEBUG;TRACE
+TRACE
 E:\Git\EasyCaster-Telebrowser\EasyCaster-Telebrowser\EasyCaster-Telebrowser\App.xaml
 6-1311638646
 
-81022334271
+8787114806
 152022562380
 About.xaml;ENG.xaml;Feedback.xaml;MainWindow.xaml;RUS.xaml;UKR.xaml;
 
-True
+False
 
