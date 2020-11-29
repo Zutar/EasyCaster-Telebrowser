@@ -92,7 +92,7 @@ namespace EasyCaster_Telebrowser
                 {
                     proc[1] = p[0];
                     enable[1] = true;
-                    m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
+                    m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
                     intoMainWindow(1, true);
                 }
             }
@@ -114,7 +114,7 @@ namespace EasyCaster_Telebrowser
                 {
                     proc[2] = p[0];
                     enable[2] = true;
-                    m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
+                    m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
                     intoMainWindow(2, true);
                 }
             }
@@ -131,20 +131,56 @@ namespace EasyCaster_Telebrowser
             if (id == 0)
             {
                 m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
-                mc_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
+                mc_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#d10000");
                 mc_encoder.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#000000");
+
+                DispatcherTimer color_timer = new DispatcherTimer();
+                color_timer.Tick += new EventHandler(Color_timer);
+                color_timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+                color_timer.IsEnabled = true;
+
+
+                void Color_timer(object sender, EventArgs e)
+                {
+                    color_timer.Stop();
+                    mc_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
+                }
             }
             else if (id == 1)
             {
                 m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
-                m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
-                m_alphapro.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#000000");
+                mc_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#d10000");
+                mc_alphapro.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#000000");
+
+                DispatcherTimer color_timer = new DispatcherTimer();
+                color_timer.Tick += new EventHandler(Color_timer);
+                color_timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+                color_timer.IsEnabled = true;
+
+
+                void Color_timer(object sender, EventArgs e)
+                {
+                    color_timer.Stop();
+                    mc_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
+                }
             }
             else
             {
                 m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
-                m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
-                m_tele.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#000000");
+                mc_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#d10000");
+                mc_tele.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#000000");
+
+                DispatcherTimer color_timer = new DispatcherTimer();
+                color_timer.Tick += new EventHandler(Color_timer);
+                color_timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+                color_timer.IsEnabled = true;
+
+
+                void Color_timer(object sender, EventArgs e)
+                {
+                    color_timer.Stop();
+                    mc_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#FFDDDDDD");
+                }
             }
             try
             {
@@ -157,6 +193,7 @@ namespace EasyCaster_Telebrowser
             proc[id] = null;
             enable[id] = false;
         }
+
         private void StartProcess(int id, bool firstStart)
         {
             String name = "";
@@ -176,7 +213,7 @@ namespace EasyCaster_Telebrowser
                 BrushConverter bc = new BrushConverter();
                 mc_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#ff0000");
                 mc_encoder.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#ffffff");
-                m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
+                m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
                 if(firstStart) m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#5eb5eb");
             }
             else if(id == 1)
@@ -187,7 +224,7 @@ namespace EasyCaster_Telebrowser
                 BrushConverter bc = new BrushConverter();
                 mc_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#ff0000");
                 mc_alphapro.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#ffffff");
-                m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
+                m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
             }
             else
             {
@@ -197,16 +234,19 @@ namespace EasyCaster_Telebrowser
                 BrushConverter bc = new BrushConverter();
                 mc_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#ff0000");
                 mc_tele.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#ffffff");
-                m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
+                m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
             }
 
             proc[id].StartInfo = startInfo;
             proc[id].Start();
             enable[id] = true;
+            
             int timer = 1000;
             if (id == 1)
             {
                 timer = 2500;
+                Process.GetProcessById(proc[id].Id).PriorityClass = ProcessPriorityClass.RealTime;
+                proc[id].Refresh();
             }
             else if (id == 2)
             {
@@ -325,8 +365,8 @@ namespace EasyCaster_Telebrowser
 
             BrushConverter bc = new BrushConverter();
             m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#5eb5eb");
-            m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
-            m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
+            m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
+            m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
         }
 
         private void m_alphapro_Click(object sender, RoutedEventArgs e)
@@ -354,9 +394,9 @@ namespace EasyCaster_Telebrowser
             }
 
             BrushConverter bc = new BrushConverter();
-            m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
+            m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
             m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#5eb5eb");
-            m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
+            m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
         }
         private void KillProcessAndChildrens(int pid)
         {
@@ -419,8 +459,8 @@ namespace EasyCaster_Telebrowser
             }
 
             BrushConverter bc = new BrushConverter();
-            m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
-            m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7cdff");
+            m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
+            m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
             m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#5eb5eb");
         }
 

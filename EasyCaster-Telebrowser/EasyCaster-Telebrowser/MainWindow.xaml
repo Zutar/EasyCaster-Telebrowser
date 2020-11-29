@@ -38,12 +38,74 @@
                 <MenuItem x:Name="m_l_ukr" Style="{DynamicResource MenuItem}" Cursor="Hand" Header="UKR" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_ukr_Click"/>
                 <MenuItem x:Name="m_l_eng" Style="{DynamicResource MenuItem}" Cursor="Hand" Header="ENG" VerticalAlignment="Top" HorizontalAlignment="Left" Click="m_l_eng_Click_1"/>
             </MenuItem>
-            <Button x:Name="m_encoder" Style="{DynamicResource MenuItem}" Focusable="False" Content="Encoder" Padding="5,1" Click="m_encoder_Click" Margin="0,-2,0,0" Width="100" FontFamily="Arial" FontWeight="Bold" Background="#FFDDDDDD" Cursor="Hand"/>
-            <Button x:Name="mc_encoder" Content="x" Padding="5,1" Margin="-14,-2,0,0" Click="mc_encoder_Click" Width="20" FontWeight="Bold" Cursor="Hand"/>
+            <Button x:Name="m_encoder" Content="Encoder" Padding="5,1" Click="m_encoder_Click" Margin="0,-2,0,0" Width="100" FontFamily="Arial" FontWeight="Bold" Background="#FFDDDDDD" Cursor="Hand"/>
+            <Button x:Name="mc_encoder" Content="x" Padding="5,1" Margin="-14,-2,0,0" Click="mc_encoder_Click" Width="20" FontWeight="Bold" Cursor="Hand">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFDDDDDD"/>
+                        <Setter Property="BorderBrush" Value="#FF707070"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#FF707070">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFDDDDDD"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <Button x:Name="m_alphapro" Content="Video settings" Padding="5,1" Click="m_alphapro_Click" Margin="0,-2,0,0" Width="100" FontFamily="Arial" FontWeight="Bold" Cursor="Hand"/>
-            <Button x:Name="mc_alphapro" Content="x" Padding="5,1" Margin="-14,-2,0,0" Click="mc_alphapro_Click" Width="20" FontFamily="Arial" FontWeight="Bold" Cursor="Hand"/>
+            <Button x:Name="mc_alphapro" Content="x" Padding="5,1" Margin="-14,-2,0,0" Click="mc_alphapro_Click" Width="20" FontFamily="Arial" FontWeight="Bold" Cursor="Hand">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFDDDDDD"/>
+                        <Setter Property="BorderBrush" Value="#FF707070"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#FF707070">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FFDDDDDD"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <Button x:Name="m_tele" Content="Video switcher" Padding="5,1" Margin="0,-2,0,0" Click="m_tele_Click" FontFamily="Arial" FontWeight="Bold" Width="100" Cursor="Hand"/>
-            <Button x:Name="mc_tele" Content="x" Padding="5,1" Margin="-14,-2,0,0" Click="mc_tele_Click" Width="20" FontFamily="Arial" FontWeight="Bold" Cursor="Hand"/>
+            <Button x:Name="mc_tele" Content="x" Padding="5,1" Margin="-14,-2,0,0" Click="mc_tele_Click" Width="20" FontFamily="Arial" FontWeight="Bold" Cursor="Hand">
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="#FFDDDDDD"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}" BorderThickness="1" BorderBrush="#FF707070">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
             <CheckBox x:Name="autostart" Content="{DynamicResource autostart}" Checked="autostart_Checked" FontFamily="Arial" Margin="0,-2,0,0" Cursor="Hand" Padding="0,2,0,0"/>
         </Menu>
         <ScrollViewer Margin="0,25,0,0">
