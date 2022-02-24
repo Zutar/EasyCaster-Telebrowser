@@ -25,12 +25,14 @@ namespace EasyCaster_Telebrowser
         static extern int SetWindowLong(IntPtr hWnd, int nIndex, uint dwNewLong);
         [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
         static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
+        [DllImportAttribute("User32.dll")]
+        private static extern IntPtr SetForegroundWindow(int hWnd);
 
         const int GWL_STYLE = (-16);
         const uint WS_SIZEBOX = 0x00040000;
         const int WS_CAPTION = 0x00C00000;
 
-        const string name = "EasyCaster-TV T2 Encoder";
+        const string name = "EasyCaster-T2-Encoder";
         bool[] enable = { false, false, false };
         Process[] proc = { new Process(), new Process(), new Process() };
 
@@ -59,6 +61,7 @@ namespace EasyCaster_Telebrowser
         private void form_Loaded(object sender, RoutedEventArgs e)
         {
             SetLanguageDictionary();
+            autostart.IsChecked = Properties.Settings.Default.autostart;
             BrushConverter bc = new BrushConverter();
             /* Launch encoder */
             Process[] p = Process.GetProcessesByName("Easycaster TV Encoder");
@@ -212,7 +215,7 @@ namespace EasyCaster_Telebrowser
 
                 BrushConverter bc = new BrushConverter();
                 mc_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#ff0000");
-                mc_encoder.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#ffffff");
+                mc_encoder.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#000000");
                 m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
                 if(firstStart) m_encoder.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#5eb5eb");
             }
@@ -223,7 +226,7 @@ namespace EasyCaster_Telebrowser
 
                 BrushConverter bc = new BrushConverter();
                 mc_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#ff0000");
-                mc_alphapro.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#ffffff");
+                mc_alphapro.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#000000");
                 m_alphapro.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
             }
             else
@@ -233,7 +236,7 @@ namespace EasyCaster_Telebrowser
 
                 BrushConverter bc = new BrushConverter();
                 mc_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#ff0000");
-                mc_tele.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#ffffff");
+                mc_tele.Foreground = (System.Windows.Media.Brush)bc.ConvertFrom("#000000");
                 m_tele.Background = (System.Windows.Media.Brush)bc.ConvertFrom("#c7e2ff");
             }
 
@@ -246,6 +249,7 @@ namespace EasyCaster_Telebrowser
             {
                 timer = 2500;
                 Process.GetProcessById(proc[id].Id).PriorityClass = ProcessPriorityClass.RealTime;
+                priority.Header = Process.GetProcessById(proc[id].Id).PriorityClass;
                 proc[id].Refresh();
             }
             else if (id == 2)
@@ -280,7 +284,7 @@ namespace EasyCaster_Telebrowser
                                 win_timer.Stop();
                             }
                         }
-                        catch (Exception ee) {
+                        catch (Exception) {
                         }
                     }
 
@@ -356,6 +360,8 @@ namespace EasyCaster_Telebrowser
 
             if (proc[0] != null && enable[0] == true)
             {
+                int hwd = Convert.ToInt32(proc[0].MainWindowHandle);
+                if (hwd != 0) SetForegroundWindow(hwd);
                 intoMainWindow(0, false);
             }
             else
@@ -386,6 +392,8 @@ namespace EasyCaster_Telebrowser
 
             if (proc[1] != null && enable[1] == true)
             {
+                int hwd = Convert.ToInt32(proc[1].MainWindowHandle);
+                if (hwd != 0) SetForegroundWindow(hwd);
                 intoMainWindow(1, false);
             }
             else
@@ -425,9 +433,34 @@ namespace EasyCaster_Telebrowser
         {
             try
             {
+                string answer = "Вы уверены что хотите закрыть программу?";
+                string exit = "Выйти?";
+                if (Properties.Settings.Default.lang == "ukr")
+                {
+                    answer = "Ви впевнені що хочете закрити програму?";
+                    exit = "Вийти?";
+                }
+                else if (Properties.Settings.Default.lang == "eng")
+                {
+                    answer = "Are you sure you want to close the program?";
+                    exit = "Go out?";
+                }
+
+                MessageBoxResult msgResult = MessageBox.Show(answer, exit, MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (msgResult == MessageBoxResult.No)
+                {
+                    e.Cancel = true;
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
+
                 KillProcessAndChildrens(proc[0].Id);
                 KillProcessAndChildrens(proc[1].Id);
                 KillProcessAndChildrens(proc[2].Id);
+                Properties.Settings.Default.autostart = Convert.ToBoolean(autostart.IsChecked);
+                Properties.Settings.Default.Save();
             }
             catch (Exception)
             {
@@ -451,6 +484,8 @@ namespace EasyCaster_Telebrowser
 
             if (proc[2] != null && enable[2] == true)
             {
+                int hwd = Convert.ToInt32(proc[2].MainWindowHandle);
+                if(hwd != 0) SetForegroundWindow(hwd);
                 intoMainWindow(2, false);
             }
             else

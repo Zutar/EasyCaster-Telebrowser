@@ -52,7 +52,7 @@ namespace EasyCaster_Telebrowser {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/EasyCaster-Telebrowser;component/feedback.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/EasyCaster-T2-Encoder;component/feedback.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\Feedback.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -107,6 +107,7 @@
                 </Button.Style>
             </Button>
             <CheckBox x:Name="autostart" Content="{DynamicResource autostart}" Checked="autostart_Checked" FontFamily="Arial" Margin="0,-2,0,0" Cursor="Hand" Padding="0,2,0,0"/>
+            <MenuItem x:Name="priority" Style="{DynamicResource MenuItem}" Cursor="Hand" Foreground="#FF464646" Click="m_about_Click" FontFamily="Arial"/>
         </Menu>
         <ScrollViewer Margin="0,25,0,0">
             <StackPanel x:Name="sp"/>
